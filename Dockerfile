@@ -1,6 +1,6 @@
-FROM sdhibit/rpi-raspbian:jessie
+FROM resin/rpi-raspbian:jessie
 
-MAINTAINER Simon Chuang "simon.s.chuang@gmail.com"
+MAINTAINER George Hahn "george.hahn@lab651.com"
 
 RUN apt-get update --fix-missing && apt-get install -y \
     hostapd \
