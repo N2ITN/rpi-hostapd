@@ -10,7 +10,14 @@ term_handler() {
   kill -TERM "$child" 2> /dev/null
 }
 
+# Bringing down wlan0 interface...
+echo "Stopping wlan0 interface on host..."
+#pkill wpa_supplicant
+#nsenter -t 30 --mount --uts --ipc --net --pid ifdown wlan0
+ifdown wlan0
+#manually configure wlan0
 ifconfig wlan0 10.0.0.1/24
+ifconfig wlan0 up
 
 if [ -z "$SSID" -a -z "$PASSWORD" ]; then
   ssid="Pi3-AP"
@@ -40,3 +47,6 @@ trap term_handler SIGKILL
 sleep infinity &
 child=$!
 wait "$child"
+
+echo "Rebooting device"
+nsenter -t 1 --mount --uts --ipc --net --pid reboot now
